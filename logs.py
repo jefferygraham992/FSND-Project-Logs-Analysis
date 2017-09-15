@@ -32,8 +32,8 @@ def countAuthors():
     cursor = db.cursor()
     query = ("SELECT authors.name, count(authors.name) FROM log JOIN\n"
              " articles ON log.path ILIKE '%' || articles.slug JOIN authors\n"
-             " ON articles.author = authors.id GROUP BY authors.name ORDER BY\n"
-             " count DESC;")
+             " ON articles.author = authors.id GROUP BY authors.name\n"
+             " ORDER BY count DESC;")
     cursor.execute(query)
     results = cursor.fetchall()
     for result in results:
@@ -55,7 +55,7 @@ def countErrors():
     for result in results:
         date_object = datetime.strptime(result[0], '%m/%d/%Y')
         print("%s - %.1f%% errors") % (date_object.strftime('%B %d, %Y'),
-            float(result[3]))
+                                       float(result[3]))
     db.close()
 
 
