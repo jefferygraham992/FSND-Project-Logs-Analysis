@@ -54,6 +54,6 @@ def countErrors():
     db.close()
 
 
-# countArticles()
-# countAuthors()
+countArticles()
+countAuthors()
 countErrors()
