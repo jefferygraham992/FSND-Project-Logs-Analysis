@@ -46,9 +46,6 @@ def countErrors():
     """Returns the day(s) where more than 1% of requests led to errors."""
     db = connect()
     cursor = db.cursor()
-    # cursor.execute("CREATE VIEW errors AS SELECT status, to_char(time, 'mm/dd/yyyy') AS DAY, COUNT(STATUS) FROM log GROUP BY DAY, status HAVING status = '404 NOT FOUND';")
-    # cursor.execute("CREATE VIEW all_events AS SELECT status, to_char(time, 'mm/dd/yyyy') AS DAY, COUNT(STATUS) FROM log GROUP BY DAY, status;")
-    # cursor.execute("CREATE VIEW total_events AS SELECT day, SUM (count) as total FROM all_events GROUP BY day;")
     cursor.execute("SELECT errors.day, errors.count AS errors, sum_all_events.total AS total, ((errors.count/sum_all_events.total) * 100) AS percent FROM errors JOIN sum_all_events ON errors.day = sum_all_events.day WHERE (errors.count/sum_all_events.total) * 100 > 1;")
     results = cursor.fetchall()
     for result in results:
